@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Result 💕</title>
+
+    <style>
+        body {
+            background: linear-gradient(to right, #ffcce6, #ff99cc);
+            font-family: "Comic Sans MS", cursive;
+            text-align: center;
+            padding: 50px;
+            color: #5a005a;
+            overflow: hidden;
+        }
+
+        .box {
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0px 0px 25px hotpink;
+            max-width: 600px;
+            margin: auto;
+            position: relative;
+        }
+
+        h1 {
+            color: #ff1493;
+        }
+
+        .love-note {
+            margin-top: 25px;
+            font-size: 18px;
+        }
+
+        .btn {
+            margin-top: 20px;
+            padding: 12px 25px;
+            background: #ff69b4;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .btn:hover {
+            background: #ff1493;
+            transform: scale(1.05);
+        }
+
+        #noBtn {
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h1>💘 Your Score: {{ score }}/{{ total }}</h1>
+
+    <h2>But guess what? 🥰</h2>
+    <p>The score doesn't matter...</p>
+
+    <h1>Will you be my Galentine? 💕🌸</h1>
+
+    <div class="love-note">
+        <p>
+            You are my safe place, my favorite person, my built-in best friend.
+            Life is brighter, softer, and happier with you.
+        </p>
+
+        <p>
+            No quiz could measure how much I love you GHAUSIA 💖
+        </p>
+    </div>
+
+    <button class="btn" onclick="sayYes()">Yes 💕</button>
+    <button class="btn" id="noBtn">No 😢</button>
+
+</div>
+
+<script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.querySelector(".btn");
+    const box = document.querySelector(".box");
+
+    let noSize = 1; // scale multiplier
+
+    function moveButton() {
+        const maxX = box.clientWidth - noBtn.offsetWidth;
+        const maxY = box.clientHeight - noBtn.offsetHeight;
+
+        const randomX = Math.floor(Math.random() * maxX);
+        const randomY = Math.floor(Math.random() * maxY);
+
+        noBtn.style.left = randomX + "px";
+        noBtn.style.top = randomY + "px";
+    }
+
+    function shakeScreen() {
+        document.body.style.animation = "shake 0.4s";
+        setTimeout(() => {
+            document.body.style.animation = "";
+        }, 400);
+    }
+
+    function shrinkNo() {
+        noSize -= 0.15;
+        if (noSize < 0.2) noSize = 0.2;
+        noBtn.style.transform = `scale(${noSize})`;
+    }
+
+    // Desktop hover
+    noBtn.addEventListener("mouseover", () => {
+        moveButton();
+        shrinkNo();
+        shakeScreen();
+    });
+
+    // Mobile tap
+    noBtn.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        moveButton();
+        shrinkNo();
+        shakeScreen();
+    });
+
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.innerHTML = "💖";
+        heart.style.position = "fixed";
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.top = window.innerHeight + "px";
+        heart.style.fontSize = (20 + Math.random() * 30) + "px";
+        heart.style.animation = "floatUp 2s linear forwards";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 2000);
+    }
+
+    function heartExplosion() {
+        for (let i = 0; i < 40; i++) {
+            createHeart();
+        }
+    }
+
+    function sayYes() {
+        heartExplosion();
+
+        setTimeout(() => {
+            document.body.innerHTML = `
+                <div style="
+                    text-align:center;
+                    padding:100px;
+                    font-family: Comic Sans MS;
+                    background: linear-gradient(to right, #ff66b2, #ff1493);
+                    height:100vh;
+                    color:white;
+                ">
+                    <h1 style="font-size:50px;">YAYYYYY 💕🌸</h1>
+                    <h2>You are officially my Galentine forever 💖</h2>
+                    <p style="font-size:22px;">I love you endlessly 🥰</p>
+                </div>
+            `;
+        }, 800);
+    }
+</script>
+
+<style>
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    50% { transform: translateX(8px); }
+    75% { transform: translateX(-8px); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-800px);
+        opacity: 0;
+    }
+}
+</style>
+
+</body>
+</html>
